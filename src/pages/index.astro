@@ -1,23 +1,8 @@
 ---
-import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles.css";
 import AboutMe from "../components/AboutMe.astro";
-import Experiences from "../components/Experiences.astro";
 import Skills from "../components/Skills.astro";
-
-const projets = [
-  {
-    titre: "Projet 1",
-    description: "Description rapide du projet 1",
-    lien: "https://lien-projet1.com",
-  },
-  {
-    titre: "Projet 2",
-    description: "Description rapide du projet 2",
-    lien: "https://lien-projet2.com",
-  },
-];
 ---
 
 <script>
@@ -41,30 +26,16 @@ const projets = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio - WICHLACZ Gaëtan</title>
-    <!-- <link rel="stylesheet" href="../styles.css" /> -->
   </head>
   <body>
-    <Header />
     <main>
       <div id="tsparticles" class="particles-container"></div>
       <section id="about" class="about-section">
         <AboutMe />
       </section>
-      <!-- <section id="projets">
-        <h2>Mes projets</h2>
-        <Experiences projets={projets} />
-      </section> -->
       <section id="skills">
         <Skills />
       </section>
-      <!-- <section id="contact">
-        <h2>Contact</h2>
-        <p>
-          Envoyez-moi un message à <a href="mailto:contact@nomprenom.com"
-            >contact@nomprenom.com</a
-          >
-        </p>
-      </section> -->
     </main>
     <Footer />
   </body>
