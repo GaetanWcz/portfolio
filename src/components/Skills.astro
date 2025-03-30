@@ -1,0 +1,498 @@
+---
+import vuejsIcon from "../assets/icons/vuejs.svg?raw";
+import nestjsIcon from "../assets/icons/nestjs.svg?raw";
+import javascriptIcon from "../assets/icons/javascript.svg?raw";
+import typescriptIcon from "../assets/icons/typescript.svg?raw";
+import nodejsIcon from "../assets/icons/nodejs.svg?raw";
+import terraformIcon from "../assets/icons/terraform.svg?raw";
+import dockerIcon from "../assets/icons/docker.svg?raw";
+import kubernetesIcon from "../assets/icons/kubernetes.svg?raw";
+
+const skills = {
+  softSkills: [
+    {
+      name: "Team spirit",
+      rating: 5,
+      description: "Strong collaboration and communication abilities",
+      icon: "👥",
+    },
+    {
+      name: "Problem Solving",
+      rating: 5,
+      description: "Analytical thinking and creative solutions",
+      icon: "🔍",
+    },
+    {
+      name: "Leadership",
+      rating: 4,
+      description: "Team management and project direction",
+      icon: "🎯",
+    },
+  ],
+  hardSkills: [
+    {
+      name: "Javascript",
+      rating: 5,
+      icon: javascriptIcon,
+      isSvg: true,
+      officialUrl: "https://developer.mozilla.org/fr/docs/Web/JavaScript",
+    },
+    {
+      name: "Typescript",
+      rating: 5,
+      icon: typescriptIcon,
+      isSvg: true,
+      officialUrl: "https://www.typescriptlang.org/",
+    },
+    {
+      name: "Node.js",
+      rating: 4,
+      icon: nodejsIcon,
+      isSvg: true,
+      officialUrl: "https://nodejs.org/",
+    },
+    {
+      name: "VueJS",
+      icon: vuejsIcon,
+      rating: 5,
+      isSvg: true,
+      officialUrl: "https://vuejs.org/",
+    },
+    {
+      name: "NestJS",
+      icon: nestjsIcon,
+      isSvg: true,
+      rating: 5,
+      officialUrl: "https://nestjs.com/",
+    },
+    {
+      name: "Terraform",
+      icon: terraformIcon,
+      isSvg: true,
+      rating: 4,
+      officialUrl: "https://www.terraform.io/",
+    },
+    {
+      name: "Docker",
+      icon: dockerIcon,
+      isSvg: true,
+      rating: 4,
+      officialUrl: "https://www.docker.com/",
+    },
+    {
+      name: "Kubernetes",
+      icon: kubernetesIcon,
+      isSvg: true,
+      rating: 2,
+      officialUrl: "https://kubernetes.io/",
+    },
+  ],
+  languages: [
+    {
+      name: "French",
+      rating: 5,
+      description: "Native speaker",
+      icon: "🇫🇷",
+    },
+    {
+      name: "English",
+      rating: 5,
+      description: "Professional working proficiency",
+      icon: "🇬🇧",
+    },
+    {
+      name: "Spanish",
+      rating: 3,
+      description: "Basic communication",
+      icon: "🇪🇸",
+    },
+  ],
+};
+
+const groupSkillsByRating = (skillsList: any[]) => {
+  const grouped = {
+    5: [] as any[],
+    4: [] as any[],
+    3: [] as any[],
+    2: [] as any[],
+    1: [] as any[],
+    other: [] as any[],
+  };
+
+  skillsList.forEach((skill) => {
+    if ("rating" in skill && typeof skill.rating === "number") {
+      grouped[skill.rating as keyof typeof grouped].push(skill);
+    } else {
+      grouped.other.push(skill);
+    }
+  });
+
+  // Filter out empty categories
+  return Object.fromEntries(
+    Object.entries(grouped).filter(([_, skills]) => skills.length > 0)
+  );
+};
+
+const softSkillsGrouped = groupSkillsByRating(skills.softSkills);
+const hardSkillsGrouped = groupSkillsByRating(skills.hardSkills);
+const languagesGrouped = groupSkillsByRating(skills.languages);
+
+const sections = [
+  {title: "Soft Skills", skills: softSkillsGrouped, isTech: false},
+  {title: "Tech Skills", skills: hardSkillsGrouped, isTech: true},
+  {title: "Languages", skills: languagesGrouped, isTech: false},
+];
+---
+
+<div class="skills-container">
+  <div class="content">
+    <div class="skills-grid">
+      {
+        sections.map((section) => (
+          <div class="skill-section">
+            <h2>{section.title}</h2>
+            {Object.entries(section.skills).map(([rating, skills]) => (
+              <div class="rating-group">
+                {rating !== "other" && (
+                  <h3 class="rating-title">
+                    {[...Array(parseInt(rating))].map(() => (
+                      <span class="star filled">★</span>
+                    ))}
+                  </h3>
+                )}
+                <ul class={section.isTech ? "" : "languages-list"}>
+                  {skills.map((skill) => (
+                    <li>
+                      <div class="skill-content">
+                        <div class="skill-header">
+                          {section.isTech ? (
+                            <a
+                              href={skill.officialUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="skill-icon"
+                            >
+                              <Fragment set:html={skill.icon} />
+                            </a>
+                          ) : (
+                            <>
+                              <span class="skill-icon">{skill.icon}</span>
+                              <span class="skill-name">{skill.name}</span>
+                            </>
+                          )}
+                        </div>
+                        <p class="skill-description">
+                          {section.isTech ? skill.name : skill.description}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .skills-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #333333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    align-items: start;
+  }
+
+  .skill-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: fit-content;
+  }
+
+  h2 {
+    color: white;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 0.5rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    color: white;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  li:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  li:hover .skill-icon {
+    transform: scale(1.1);
+  }
+
+  .skill-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+  }
+
+  .skill-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .skill-icon {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    padding: 8px;
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .skill-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .skill-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .skill-description {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .rating {
+    display: flex;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+  }
+
+  .star {
+    color: #ccc;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+  }
+
+  .star.filled {
+    color: #ffd700;
+  }
+
+  @media (max-width: 768px) {
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .languages-list {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+  }
+
+  .languages-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    justify-items: center;
+  }
+
+  .languages-list li {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  /* Style spécifique pour les Tech Skills */
+  .skill-section:nth-child(2) {
+    padding: 1rem;
+  }
+
+  .skill-section:nth-child(2) ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1.5rem;
+    justify-items: center;
+    padding: 0.5rem;
+  }
+
+  .skill-section:nth-child(2) li {
+    width: 100%;
+    max-width: 100px;
+    padding: 1rem;
+    margin: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .skill-section:nth-child(2) .skill-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .skill-section:nth-child(2) .skill-header {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .skill-section:nth-child(2) .skill-icon {
+    width: 70px;
+    height: 70px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .skill-section:nth-child(2) .skill-icon:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .skill-section:nth-child(2) .skill-icon svg {
+    width: 45px !important;
+    height: 45px !important;
+    transition: all 0.3s ease;
+  }
+
+  .skill-section:nth-child(2) .skill-icon svg[width],
+  .skill-section:nth-child(2) .skill-icon svg[height] {
+    width: 45px !important;
+    height: 45px !important;
+  }
+
+  .skill-section:nth-child(2) .skill-name {
+    display: none;
+  }
+
+  .skill-section:nth-child(2) .skill-description {
+    font-size: 0.9rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .skill-section:nth-child(2) li:hover .skill-icon {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Ajustement pour les écrans mobiles */
+  @media (max-width: 768px) {
+    .skill-section:nth-child(2) ul {
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-section:nth-child(2) .skill-icon {
+      width: 60px;
+      height: 60px;
+      padding: 12px;
+    }
+
+    .skill-section:nth-child(2) .skill-icon svg {
+      width: 35px;
+      height: 35px;
+    }
+
+    .skill-section:nth-child(2) .skill-description {
+      font-size: 0.7rem;
+    }
+  }
+
+  .rating-group {
+    margin-bottom: 2rem;
+  }
+
+  .rating-title {
+    color: #ffd700;
+    font-size: 1.4rem;
+    margin: 1.5rem 0 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
+  }
+
+  .rating-title .star {
+    font-size: 1.6rem;
+  }
+</style>

@@ -1,0 +1,48 @@
+---
+import astroIcon from "../assets/icons/astro_footer.svg?raw";
+---
+
+<footer>
+  <div class="footer-content">
+    © 2025 - WICHLACZ Gaëtan. Made with
+    <a
+      href={"https://astro.build/"}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="skill-icon"
+    >
+      <span class="astro-icon" set:html={astroIcon} />
+    </a>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background-color: #333;
+    color: white;
+    padding: 1em 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .footer-content,
+  a {
+    display: flex;
+    justify-content: center;
+    line-height: 32px;
+    align-items: normal;
+  }
+
+  .astro-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin: 0 4px;
+  }
+
+  .astro-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+</style>

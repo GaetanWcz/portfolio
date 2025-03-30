@@ -1,0 +1,16 @@
+---
+const {projets} = Astro.props;
+---
+
+<ul>
+  {
+    projets.map((projet) => (
+      <li>
+        <a href={projet.lien} target="_blank">
+          {projet.titre}
+        </a>{" "}
+        - {projet.description}
+      </li>
+    ))
+  }
+</ul>

@@ -1,0 +1,79 @@
+---
+
+---
+
+<header>
+  <nav>
+    <a href="#about">À propos</a>
+    <a href="#projets">Projets</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<style>
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 0.8rem 2.5rem;
+    border-radius: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition:
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  nav:hover {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  a {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    position: relative;
+  }
+
+  a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: #0d47a1;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  a:hover {
+    color: #0d47a1;
+  }
+
+  a:hover::after {
+    width: 80%;
+  }
+</style>
